@@ -46,22 +46,24 @@ async function fetchData(params) {
                     email: document.getElementById('email').value
                 };
 
-                fetch('http://localhost:8080/users/update', {
+                fetch(`http://localhost:8080/users/update/${updatedUser.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(updatedUser)
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                    modal.style.display = 'none';
+                .then(response => {
+                    if (response.ok){
+                        modal.style.display = 'none'
+                        return
+                    }
+                    throw new Error('ユーザー更新失敗')
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-                })
+            })
                 
             })
 
