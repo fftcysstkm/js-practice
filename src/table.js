@@ -3,41 +3,6 @@ import "./style.css";
 const modal = document.getElementById("modal");
 const modalDetail = document.getElementById("modal-details");
 
-// 登録モーダル表示、登録処理
-document.getElementById("register-button-top").addEventListener("click", () => {
-  modal.style.display = "flex";
-  const registerButton = document.getElementById("register-button");
-  registerButton.hidden = false;
-  document.getElementById("delete-button").hidden = true;
-  document.getElementById("update-button").hidden = true;
-
-  registerButton.addEventListener("click", async () => {
-    const newUser = {
-      name: document.getElementById("name").value,
-      phone: document.getElementById("phone").value,
-      email: document.getElementById("email").value,
-    };
-
-    try {
-      const response = await fetch("http://localhost:8080/users/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
-      });
-
-      if (response.ok) {
-        modal.style.display = "none";
-        // リロード
-        await fetchUsers();
-        return;
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      confirm("ユーザー登録に失敗");
-    }
-  });
-});
-
 // データ取得処理
 async function fetchUsers() {
   try {
@@ -76,7 +41,7 @@ function renderUserTable(users) {
 }
 
 // モーダル表示処理
-function showUserDetails(user) {
+async function showUserDetails(user) {
   modal.style.display = "flex";
   document.getElementById("register-button").hidden = true;
   document.getElementById("delete-button").hidden = false;
@@ -94,63 +59,107 @@ function showUserDetails(user) {
     .addEventListener("click", async () => {
       // バリデーション
       if (!validateFields()) return;
-
-      const updatedUser = {
-        id: document.getElementById("user-id").value,
-        name: document.getElementById("name").value,
-        phone: document.getElementById("phone").value,
-        email: document.getElementById("email").value,
-      };
-
-      try {
-        const response = await fetch(
-          `http://localhost:8080/users/update/${updatedUser.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updatedUser),
-          }
-        );
-
-        if (response.ok) {
-          modal.style.display = "none";
-          // リロード
-          fetchUsers();
-          return;
-        }
-        throw new Error("ユーザー更新失敗");
-      } catch (error) {
-        console.error("Error:", error);
-      }
+      await updateUser();
     });
 
   // モーダル内削除ボタン
   document
     .getElementById("delete-button")
     .addEventListener("click", async () => {
-      const deleteId = document.getElementById("user-id").value;
-      try {
-        const response = await fetch(
-          `http://localhost:8080/users/delete/${deleteId}`,
-          {
-            method: "DELETE",
-          }
-        );
-
-        if (response.ok) {
-          modal.style.display = "none";
-          // リロード
-          fetchUsers();
-          return;
-        }
-        throw new Error("ユーザー削除失敗");
-      } catch (error) {
-        console.error("Error:", error);
-      }
+      await deleteUser();
     });
 }
+
+// モーダル内更新ボタン押下時処理
+async function updateUser() {
+  const updatedUser = {
+    id: document.getElementById("user-id").value,
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+  };
+
+  try {
+    const response = await fetch(
+      `http://localhost:8080/users/update/${updatedUser.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedUser),
+      }
+    );
+
+    if (response.ok) {
+      modal.style.display = "none";
+      // リロード
+      await fetchUsers();
+      return;
+    }
+    throw new Error("ユーザー更新失敗");
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// モーダル内削除ボタン処理
+async function deleteUser() {
+  const deleteId = document.getElementById("user-id").value;
+  try {
+    const response = await fetch(
+      `http://localhost:8080/users/delete/${deleteId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (response.ok) {
+      modal.style.display = "none";
+      // リロード
+      await fetchUsers();
+      return;
+    }
+    throw new Error("ユーザー削除失敗");
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+// 登録モーダル表示、登録処理
+document.getElementById("register-button-top").addEventListener("click", () => {
+  modal.style.display = "flex";
+  const registerButton = document.getElementById("register-button");
+  registerButton.hidden = false;
+  document.getElementById("delete-button").hidden = true;
+  document.getElementById("update-button").hidden = true;
+
+  registerButton.addEventListener("click", async () => {
+    const newUser = {
+      name: document.getElementById("name").value,
+      phone: document.getElementById("phone").value,
+      email: document.getElementById("email").value,
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/users/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newUser),
+      });
+
+      if (response.ok) {
+        modal.style.display = "none";
+        // リロード
+        await fetchUsers();
+        return;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      confirm("ユーザー登録に失敗");
+    }
+  });
+});
 
 // モーダル閉じる
 document.querySelector(".close-button").addEventListener("click", () => {
