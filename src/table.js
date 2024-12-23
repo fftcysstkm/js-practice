@@ -66,6 +66,28 @@ async function fetchData(params) {
                 console.error("Error:", error);
               });
           });
+
+        // モーダル内削除ボタン
+        document
+          .getElementById("delete-button")
+          .addEventListener("click", () => {
+            const deleteId = document.getElementById("user-id").value;
+            fetch(`http://localhost:8080/users/delete/${deleteId}`, {
+              method: "DELETE",
+            })
+              .then((response) => {
+                if (response.ok) {
+                  modal.style.display = "none";
+                  // リロード
+                  fetchData();
+                  return;
+                }
+                throw new Error("ユーザー削除失敗");
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          });
       });
     });
   } catch (error) {}

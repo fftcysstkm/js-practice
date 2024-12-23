@@ -1,4 +1,4 @@
-input{
+input {
   min-width: 200px;
   height: 30px;
   border-radius: 8px;
@@ -6,35 +6,35 @@ input{
   padding: 8px;
 }
 
-button{
+button {
   height: 40px;
   border-radius: 8px;
-  border:none;
+  border: none;
   background-color: #62a3a3;
-  padding: 4px 8px; 
+  padding: 4px 8px;
   color: #fff;
 }
 
-.detail-button, .edit-button{
+.detail-button,
+.edit-button {
   min-width: 60px;
 }
 
-
-table{
+table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-table th,table td{
+table th,
+table td {
   padding: 10px 0;
   text-align: center;
 }
 
-tbody tr:nth-child(odd){
-  background-color: #eee
+tbody tr:nth-child(odd) {
+  background-color: #eee;
 }
-
 
 /* モーダルのスタイル */
 .modal {
@@ -69,21 +69,26 @@ tbody tr:nth-child(odd){
 }
 
 #modal-details label {
-  width: 80px;  /* ラベルの幅を固定 */
+  width: 80px; /* ラベルの幅を固定 */
   text-align: left;
   margin-right: 10px;
 }
 
 #modal-details input {
-  flex: 1;  /* 残りのスペースを入力フィールドが占める */
+  flex: 1; /* 残りのスペースを入力フィールドが占める */
 }
 
 .button-container {
   display: flex;
-  justify-content: flex-end;  /* 右寄せ */
-  margin-top: 20px;  /* 上部の入力フィールドとの間隔 */
+  justify-content: flex-end; /* 右寄せ */
+  margin-top: 20px; /* 上部の入力フィールドとの間隔 */
 }
 
-.update-button {
+.button-container button {
   min-width: 80px;
+  margin-left: 10px; /* ボタン間の間隔を設定 */
+}
+
+.delete-button {
+  background-color: #aa1414;
 }

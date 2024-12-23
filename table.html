@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,53 +7,57 @@
     <title>Vite App</title>
   </head>
   <body>
-    <input class="search-input" type="text">
+    <input class="search-input" type="text" />
     <button>検索</button>
     <button>新規</button>
     <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>名前</th>
-                <th>TEL</th>
-                <th>e-mail</th>
-                <th>詳細</th>
-            </tr>
-        </thead>
-        <tbody id="user-tbody">
-        </tbody>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>名前</th>
+          <th>TEL</th>
+          <th>e-mail</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody id="user-tbody"></tbody>
     </table>
 
     <!-- モーダル -->
-    <div id="modal" class="modal" style="display: none;">
+    <div id="modal" class="modal" style="display: none">
       <div class="modal-content">
-          <span class="close-button">×</span>
-          <h2 id="modal-title">ユーザー</h2>
-          <form id="modal-details">
-              <div>
-                <label for="user-id">ID</label>
-                <input type="text" id="user-id" name="user-id" disabled>
-              </div>
-              <div>
-                <label for="name">名前</label>
-                <input type="text" id="name" name="name">
-              </div>
-              <div>
-                <label for="phone">TEL</label>
-                <input type="text" id="phone" name="phone">
-              </div>
-              <div>
-                <label for="email">email</label>
-                <input type="text" id="email" name="email">
-              </div>
-              <!-- 更新ボタン -->
-              <div class="button-container">
-                <button type="button" class="update-button" id="update-button">更新</button>
-              </div>
-          </form>
+        <span class="close-button">×</span>
+        <h2 id="modal-title">ユーザー</h2>
+        <form id="modal-details">
+          <div>
+            <label for="user-id">ID</label>
+            <input type="text" id="user-id" name="user-id" disabled />
+          </div>
+          <div>
+            <label for="name">名前</label>
+            <input type="text" id="name" name="name" />
+          </div>
+          <div>
+            <label for="phone">TEL</label>
+            <input type="text" id="phone" name="phone" />
+          </div>
+          <div>
+            <label for="email">email</label>
+            <input type="text" id="email" name="email" />
+          </div>
+          <!-- 更新ボタン -->
+          <div class="button-container">
+            <button type="button" class="delete-button" id="delete-button">
+              削除
+            </button>
+            <button type="button" class="update-button" id="update-button">
+              更新
+            </button>
+          </div>
+        </form>
       </div>
-   </div>
+    </div>
 
-  <script type="module" src="/src/table.js"></script>
+    <script type="module" src="/src/table.js"></script>
   </body>
 </html>
