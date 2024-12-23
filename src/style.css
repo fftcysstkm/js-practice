@@ -8,16 +8,21 @@ input {
 
 button {
   height: 40px;
+  min-width: 60px;
   border-radius: 8px;
   border: none;
-  background-color: #62a3a3;
+  background-color: #9eaeb3;
   padding: 4px 8px;
   color: #fff;
 }
 
-.detail-button,
-.edit-button {
-  min-width: 60px;
+.register-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.register-container button {
+  background-color: #62a3a3;
 }
 
 table {
@@ -78,17 +83,22 @@ tbody tr:nth-child(odd) {
   flex: 1; /* 残りのスペースを入力フィールドが占める */
 }
 
-.button-container {
+.modal-button-container {
   display: flex;
   justify-content: flex-end; /* 右寄せ */
   margin-top: 20px; /* 上部の入力フィールドとの間隔 */
 }
 
-.button-container button {
+.modal-button-container button {
   min-width: 80px;
   margin-left: 10px; /* ボタン間の間隔を設定 */
 }
 
 .delete-button {
   background-color: #aa1414;
+}
+
+.update-button,
+.register-button {
+  background-color: #62a3a3;
 }
