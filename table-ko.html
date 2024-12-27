@@ -6,18 +6,13 @@
     <title>Knockout.js App</title>
   </head>
   <body>
-    <div>
-      <p>First name: <input data-bind="value: firstName" /></p>
-      <p>Last name: <input data-bind="value: lastName" /></p>
-      <p>Full name: <span data-bind="text: fullName" /></p>
-    </div>
     <!-- <div id="input-container">
       <input class="search-input" type="text" />
       <button>検索</button>
     </div>
     <div class="register-container">
       <button id="register-button-top">新規登録</button>
-    </div>
+    </div> -->
     <table>
       <thead>
         <tr>
@@ -28,8 +23,18 @@
           <th>詳細</th>
         </tr>
       </thead>
-      <tbody id="user-tbody"></tbody>
-    </table> -->
+      <tbody id="user-tbody" data-bind="foreach: users">
+        <tr>
+          <td data-bind="text: id"></td>
+          <td data-bind="text: name"></td>
+          <td data-bind="text: phone"></td>
+          <td data-bind="text: email"></td>
+          <td>
+            <button class="detail-button">詳細</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- <div id="modal" class="modal" style="display: none">
       <div class="modal-content">
@@ -61,6 +66,9 @@
       </div>
     </div> -->
 
-    <script type="module" src="/src/table-ko.js"></script>
+    <script
+      type="module"
+      src="/src/table-ko/viewmodel/UserViewModel.js"
+    ></script>
   </body>
 </html>
