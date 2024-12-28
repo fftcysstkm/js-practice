@@ -1,8 +1,8 @@
 export class UserModel {
   static BASE_URL = "http://localhost:8080/users";
 
+  // ユーザー取得処理
   static async fetchUsers() {
-    // 取得
     const URL = this.BASE_URL + "/list";
     const response = await fetch(URL);
     if (!response.ok) {
@@ -11,4 +11,6 @@ export class UserModel {
     const users = await response.json();
     return users;
   }
+
+  
 }
