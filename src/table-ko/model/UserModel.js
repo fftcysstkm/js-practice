@@ -12,5 +12,17 @@ export class UserModel {
     return users;
   }
 
-  
+  // ユーザー削除処理
+  static async deleteUser(id) {
+    const URL = this.BASE_URL + `/delete/${id}`;
+    const response = await fetch(URL, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("ユーザー一覧の取得に失敗しました");
+    }
+
+    return response;
+  }
 }

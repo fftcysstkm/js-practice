@@ -40,7 +40,7 @@
 
     <div id="modal" class="modal" data-bind="with: selectedUser">
       <div class="modal-content">
-        <span class="close-button" data-bind="click: ()=>$root.deSelectUser()"
+        <span class="close-button" data-bind="click: $root.deSelectUser"
           >×</span
         >
         <h2 id="modal-title">ユーザー</h2>
@@ -62,9 +62,27 @@
             <input type="text" id="email" data-bind="value: email" />
           </div>
           <div class="modal-button-container">
-            <button class="delete-button" id="delete-button">削除</button>
-            <button class="update-button" id="update-button">更新</button>
-            <button class="register-button" id="register-button">登録</button>
+            <button
+              class="delete-button"
+              id="delete-button"
+              data-bind="visible: $context, click: $root.deleteUser"
+            >
+              削除
+            </button>
+            <button
+              class="update-button"
+              id="update-button"
+              data-bind="visible: $context"
+            >
+              更新
+            </button>
+            <button
+              class="register-button"
+              id="register-button"
+              data-bind="visible: !$context"
+            >
+              登録
+            </button>
           </div>
         </form>
       </div>

@@ -28,7 +28,23 @@ class UserViewModel {
       }
     };
 
-    //　ユーザー選択
+    //　ユーザー削除
+    this.deleteUser = async (user) => {
+      try {
+        const response = await UserModel.deleteUser(user.id);
+        if (response.ok) {
+          // ユーザー選択解除、モーダル閉じる
+          this.deSelectUser();
+          // リロード
+          await this.loadUsers();
+        }
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        confirm("ユーザー削除に失敗");
+      }
+    };
+
+    //　ユーザー選択（モーダル表示）
     this.selectUser = (user) => {
       // モーダル表示
       const modal = document.querySelector(".modal");
@@ -38,18 +54,21 @@ class UserViewModel {
       this.selectedUser(user);
     };
 
-    // 画面読み込み時にデータ取得
-    this.loadUsers();
-  }
+    // ユーザー選択解除（モーダル非表示）
+    this.deSelectUser = () => {
+      // モーダル非表示
+      const modal = document.querySelector(".modal");
+      if (modal) {
+        modal.classList.remove("show");
+      }
+      this.selectedUser(null);
+    };
 
-  // ユーザー選択解除
-  deSelectUser() {
-    // モーダル非表示
-    const modal = document.querySelector(".modal");
-    if (modal) {
-      modal.classList.remove("show");
-    }
-    this.selectedUser(null);
+    /////////////////////////////////////////////////////////////
+    // 以下、初期化処理
+    /////////////////////////////////////////////////////////////
+    // 画面読み込み時、データ取得
+    this.loadUsers();
   }
 }
 
