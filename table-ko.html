@@ -6,13 +6,15 @@
     <title>Knockout.js App</title>
   </head>
   <body>
-    <!-- <div id="input-container">
+    <div id="input-container">
       <input class="search-input" type="text" />
       <button>検索</button>
     </div>
     <div class="register-container">
-      <button id="register-button-top">新規登録</button>
-    </div> -->
+      <button id="register-button-top" data-bind="click: registerUser">
+        新規登録
+      </button>
+    </div>
     <table>
       <thead>
         <tr>
@@ -38,48 +40,63 @@
       </tbody>
     </table>
 
-    <div id="modal" class="modal" data-bind="with: selectedUser">
+    <div id="modal" class="modal" data-bind="visible: isModalVisible">
       <div class="modal-content">
-        <span class="close-button" data-bind="click: $root.deSelectUser"
-          >×</span
-        >
+        <span class="close-button" data-bind="click: deSelectUser">×</span>
         <h2 id="modal-title">ユーザー</h2>
         <form id="modal-details">
           <div>
             <label for="user-id">ID</label>
-            <input type="text" id="user-id" data-bind="value: id" disabled />
+            <input
+              type="text"
+              id="user-id"
+              data-bind="value: selectedUser() ? selectedUser().id : ''"
+              disabled
+            />
           </div>
           <div>
             <label for="name">名前</label>
-            <input type="text" id="name" data-bind="value: name" />
+            <input
+              type="text"
+              id="name"
+              data-bind="value: selectedUser() ? selectedUser().name : ''"
+            />
           </div>
           <div>
             <label for="phone">TEL</label>
-            <input type="text" id="phone" data-bind="value: phone" />
+            <input
+              type="text"
+              id="phone"
+              data-bind="value: selectedUser() ? selectedUser().phone : ''"
+            />
           </div>
           <div>
             <label for="email">email</label>
-            <input type="text" id="email" data-bind="value: email" />
+            <input
+              type="text"
+              id="email"
+              data-bind="value: selectedUser() ? selectedUser().email : ''"
+            />
           </div>
           <div class="modal-button-container">
             <button
               class="delete-button"
               id="delete-button"
-              data-bind="visible: $context, click: $root.deleteUser"
+              data-bind="visible: selectedUser, click: deleteUser"
             >
               削除
             </button>
             <button
               class="update-button"
               id="update-button"
-              data-bind="visible: $context"
+              data-bind="visible: selectedUser"
             >
               更新
             </button>
             <button
               class="register-button"
               id="register-button"
-              data-bind="visible: !$context"
+              data-bind="visible: !selectedUser()"
             >
               登録
             </button>

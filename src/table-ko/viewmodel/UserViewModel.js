@@ -8,6 +8,8 @@ class UserViewModel {
     this.users = ko.observableArray([]);
     // 「詳細」ボタンで選択したユーザー
     this.selectedUser = ko.observable(null);
+    // モーダル表示、非表示切り替えフラグ
+    this.isModalVisible = ko.observable(false);
 
     /////////////////////////////////////////////////////////////
     // thisが指す対象をViewModel自身となることを保証するため、
@@ -29,9 +31,9 @@ class UserViewModel {
     };
 
     //　ユーザー削除
-    this.deleteUser = async (user) => {
+    this.deleteUser = async () => {
       try {
-        const response = await UserModel.deleteUser(user.id);
+        const response = await UserModel.deleteUser(this.selectedUser().id);
         if (response.ok) {
           // ユーザー選択解除、モーダル閉じる
           this.deSelectUser();
@@ -44,24 +46,24 @@ class UserViewModel {
       }
     };
 
+    // 新規登録モーダル表示
+    this.registerUser = () => {
+      this.selectedUser(null);
+      this.isModalVisible(true);
+    };
+
     //　ユーザー選択（モーダル表示）
     this.selectUser = (user) => {
-      // モーダル表示
-      const modal = document.querySelector(".modal");
-      if (modal) {
-        modal.classList.add("show");
-      }
+      // モーダルに選択ユーザー表示
       this.selectedUser(user);
+      this.isModalVisible(true);
     };
 
     // ユーザー選択解除（モーダル非表示）
     this.deSelectUser = () => {
       // モーダル非表示
-      const modal = document.querySelector(".modal");
-      if (modal) {
-        modal.classList.remove("show");
-      }
       this.selectedUser(null);
+      this.isModalVisible(false);
     };
 
     /////////////////////////////////////////////////////////////

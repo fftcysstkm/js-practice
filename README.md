@@ -63,3 +63,27 @@
 - foreach でテーブルを描画する際、`data-bind="click:$root.selectUser($data)"`のように、関数の括弧ありで記載すると、DOM 生成時に関数が実行されてしまう。
   - `data-bind="click:$root.selectUser"`か`data-bind="click:()=>$root.selectUser($data)"`などの関数の参照を渡すようにする必要がある。前者は Knockout が user インスタンスを指定した関数に渡してくれるとのこと。
 - テーブル内のボタンなど、繰り返しで生成したイベントハンドラ（イベントを処理する処理）内では this が繰り返しのインスタンスになる模様。例えばユーザー一覧では、クリックしたユーザーインスタンス自身で ViewModel にならない。上述の **this が ViewModel 自身を指すような実装**が必要。
+
+## `visible` バインディングの指定の仕方で躓いた点
+
+- 表示フラグの反転を評価するとき、observable を()付きで取得しないと正しく動作しなかった。これは、observable 自体を参照してしまい、常にobservableインスタンスがあるので true と評価されるためとのこと。
+
+```html
+<!-- ダメなパターン -->
+<button
+  class="register-button"
+  id="register-button"
+  data-bind="visible: !selectedUser"
+>
+  登録
+</button>
+
+<!-- OKなパターン -->
+<button
+  class="register-button"
+  id="register-button"
+  data-bind="visible: !selectedUser()"
+>
+  登録
+</button>
+```
