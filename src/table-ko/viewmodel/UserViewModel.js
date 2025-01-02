@@ -58,7 +58,28 @@ class UserViewModel {
       }
     };
 
-    //
+    // ユーザー更新
+    this.updateUser = async () => {
+      try {
+        const updateUser = {
+          id: this.selectedUser() ? this.selectedUser().id : "",
+          name: this.selectedUser() ? this.selectedUser().name : "",
+          phone: this.selectedUser() ? this.selectedUser().phone : "",
+          email: this.selectedUser() ? this.selectedUser().email : "",
+        };
+        const response = await UserModel.updateUser(updateUser);
+        console.log(response);
+        if (response.ok) {
+          await this.loadUsers();
+          this.selectedUser(UserViewModel.getInitUser());
+          this.isModalVisible(false);
+          return;
+        }
+      } catch (error) {
+        console.error("Error updating users:", error);
+        confirm("ユーザー更新に失敗");
+      }
+    };
 
     //　ユーザー削除
     this.deleteUser = async () => {

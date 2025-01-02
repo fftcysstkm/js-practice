@@ -27,6 +27,22 @@ export class UserModel {
     return response;
   }
 
+  // ユーザー更新
+  static async updateUser(user) {
+    const URL = this.BASE_URL + `/update/${user.id}`;
+    const response = await fetch(URL, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    if (!response.ok) {
+      throw new Error("ユーザー更新に失敗しました");
+    }
+    return response;
+  }
+
   // ユーザー削除処理
   static async deleteUser(id) {
     const URL = this.BASE_URL + `/delete/${id}`;
