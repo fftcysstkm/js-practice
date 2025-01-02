@@ -11,7 +11,7 @@
       <button>検索</button>
     </div>
     <div class="register-container">
-      <button id="register-button-top" data-bind="click: registerUser">
+      <button id="register-button-top" data-bind="click: registerUserModal">
         新規登録
       </button>
     </div>
@@ -50,7 +50,7 @@
             <input
               type="text"
               id="user-id"
-              data-bind="value: selectedUser() ? selectedUser().id : ''"
+              data-bind="value: selectedUser().id"
               disabled
             />
           </div>
@@ -59,7 +59,7 @@
             <input
               type="text"
               id="name"
-              data-bind="value: selectedUser() ? selectedUser().name : ''"
+              data-bind="value: selectedUser().name"
             />
           </div>
           <div>
@@ -67,7 +67,7 @@
             <input
               type="text"
               id="phone"
-              data-bind="value: selectedUser() ? selectedUser().phone : ''"
+              data-bind="value: selectedUser().phone"
             />
           </div>
           <div>
@@ -75,28 +75,28 @@
             <input
               type="text"
               id="email"
-              data-bind="value: selectedUser() ? selectedUser().email : ''"
+              data-bind="value: selectedUser().email"
             />
           </div>
           <div class="modal-button-container">
             <button
               class="delete-button"
               id="delete-button"
-              data-bind="visible: selectedUser, click: deleteUser"
+              data-bind="visible: !isModalCreateMode(), click: deleteUser"
             >
               削除
             </button>
             <button
               class="update-button"
               id="update-button"
-              data-bind="visible: selectedUser"
+              data-bind="visible: !isModalCreateMode()"
             >
               更新
             </button>
             <button
               class="register-button"
               id="register-button"
-              data-bind="visible: !selectedUser()"
+              data-bind="visible: isModalCreateMode, click: registerUser"
             >
               登録
             </button>

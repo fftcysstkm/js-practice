@@ -12,6 +12,21 @@ export class UserModel {
     return users;
   }
 
+  // ユーザー登録
+  static async registerUser(newUser) {
+    const URL = this.BASE_URL + "/create";
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newUser),
+    });
+
+    if (!response.ok) {
+      throw new Error("ユーザー登録に失敗しました");
+    }
+    return response;
+  }
+
   // ユーザー削除処理
   static async deleteUser(id) {
     const URL = this.BASE_URL + `/delete/${id}`;

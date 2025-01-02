@@ -7,7 +7,14 @@ class UserViewModel {
     // ユーザー一覧
     this.users = ko.observableArray([]);
     // 「詳細」ボタンで選択したユーザー
-    this.selectedUser = ko.observable(null);
+    this.selectedUser = ko.observable({
+      id: "",
+      name: "",
+      phone: "",
+      email: "",
+    });
+    // ユーザー詳細モーダル表示モード（新規:trueか編集:false）
+    this.isModalCreateMode = ko.observable(true);
     // モーダル表示、非表示切り替えフラグ
     this.isModalVisible = ko.observable(false);
 
@@ -30,6 +37,29 @@ class UserViewModel {
       }
     };
 
+    // ユーザー登録
+    this.registerUser = async () => {
+      try {
+        const newUser = {
+          name: this.selectedUser() ? this.selectedUser().name : "",
+          phone: this.selectedUser() ? this.selectedUser().phone : "",
+          email: this.selectedUser() ? this.selectedUser().email : "",
+        };
+        const response = await UserModel.registerUser(newUser);
+        if (response.ok) {
+          await this.loadUsers();
+          this.selectedUser(UserViewModel.getInitUser());
+          this.isModalVisible(false);
+          return;
+        }
+      } catch (error) {
+        console.error("Error creating users:", error);
+        confirm("ユーザー登録に失敗");
+      }
+    };
+
+    //
+
     //　ユーザー削除
     this.deleteUser = async () => {
       try {
@@ -47,8 +77,9 @@ class UserViewModel {
     };
 
     // 新規登録モーダル表示
-    this.registerUser = () => {
-      this.selectedUser(null);
+    this.registerUserModal = () => {
+      this.selectedUser(UserViewModel.getInitUser());
+      this.isModalCreateMode(true);
       this.isModalVisible(true);
     };
 
@@ -56,13 +87,15 @@ class UserViewModel {
     this.selectUser = (user) => {
       // モーダルに選択ユーザー表示
       this.selectedUser(user);
+      this.isModalCreateMode(false);
       this.isModalVisible(true);
     };
 
     // ユーザー選択解除（モーダル非表示）
     this.deSelectUser = () => {
       // モーダル非表示
-      this.selectedUser(null);
+      this.selectedUser(UserViewModel.getInitUser());
+      this.isModalCreateMode(true);
       this.isModalVisible(false);
     };
 
@@ -71,6 +104,10 @@ class UserViewModel {
     /////////////////////////////////////////////////////////////
     // 画面読み込み時、データ取得
     this.loadUsers();
+  }
+
+  static getInitUser() {
+    return { id: "", name: "", phone: "", email: "" };
   }
 }
 
